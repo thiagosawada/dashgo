@@ -4,7 +4,6 @@ import { theme } from '../styles/theme';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    // resetCSS remove as estilizações padrão dos elementos HTML
     <ChakraProvider theme={theme}>
       <Component {...pageProps} />
     </ChakraProvider>
