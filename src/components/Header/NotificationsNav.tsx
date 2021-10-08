@@ -4,9 +4,9 @@ import { RiNotificationLine, RiUserAddLine } from 'react-icons/ri';
 export function NotificationsNav() {
   return (
     <HStack
-      spacing="2rem"
-      mx="2rem"
-      pr="2rem"
+      spacing={["1.5rem", "2rem"]}
+      mx={["1.5rem", "2rem"]}
+      pr={["1.5rem", "2rem"]}
       py="1rem"
       color="gray.300"
       borderRightWidth={1}
