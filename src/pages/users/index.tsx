@@ -12,6 +12,7 @@ import {
   Th,
   Thead,
   Tr,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { RiAddLine, RiPencilLine } from "react-icons/ri";
 import { Header } from "../../components/Header";
@@ -19,6 +20,11 @@ import { Pagination } from "../../components/Pagination";
 import { Sidebar } from "../../components/Sidebar";
 
 export default function UserList() {
+  const isWideVersion = useBreakpointValue({
+    base: false,
+    lg: true,
+  });
+
   return (
     <Box>
       <Header />
@@ -43,18 +49,18 @@ export default function UserList() {
           <Table colorScheme="whiteAlpha">
             <Thead>
               <Tr>
-                <Th px="1.5rem" color="gray.300" w="2rem">
+                <Th px={["1rem", "1rem", "1.5rem"]} color="gray.300" w="2rem">
                   <Checkbox colorScheme="pink" />
                 </Th>
                 <Th>Usuário</Th>
-                <Th>Data de cadastro</Th>
-                <Th w="2rem"></Th>
+                {isWideVersion && <Th>Data de cadastro</Th>}
+                {isWideVersion && <Th w="2rem"></Th>}
               </Tr>
             </Thead>
 
             <Tbody>
               <Tr>
-                <Td px="1.5rem">
+                <Td px={["1rem", "1rem", "1.5rem"]}>
                   <Checkbox colorScheme="pink" />
                 </Td>
                 <Td>
@@ -65,18 +71,20 @@ export default function UserList() {
                     </Text>
                   </Box>
                 </Td>
-                <Td>04 de outubro de 2021</Td>
-                <Td>
-                  <Button
-                    as="a"
-                    size="sm"
-                    fontSize="sm"
-                    colorScheme="pink"
-                    leftIcon={<Icon as={RiPencilLine} fontSize={16}/>}
-                  >
-                    Editar
-                  </Button>
-                </Td>
+                {isWideVersion && <Td>04 de outubro de 2021</Td>}
+                {isWideVersion && (
+                  <Td>
+                    <Button
+                      as="a"
+                      size="sm"
+                      fontSize="sm"
+                      colorScheme="pink"
+                      leftIcon={<Icon as={RiPencilLine} fontSize={16}/>}
+                    >
+                      Editar
+                    </Button>
+                  </Td>
+                )}
               </Tr>
             </Tbody>
           </Table>
