@@ -25,7 +25,7 @@ import { Sidebar } from "../../components/Sidebar";
 
 export default function UserList() {
   // users => chave para se referir ao cache
-  const { data, isLoading, error } = useQuery("users", async () => {
+  const { data, isLoading, isFetching, error } = useQuery("users", async () => {
     const response = await fetch("http://localhost:3000/api/users")
     const data = await response.json();
 
@@ -60,7 +60,12 @@ export default function UserList() {
 
         <Box flex="1" borderRadius={8} bg="gray.800" p="2rem">
           <Flex mb="2rem" justify="space-between" align="center">
-            <Heading size="lg" fontWeight="normal">Usuários</Heading>
+            <Heading size="lg" fontWeight="normal">
+              Usuários
+              { !isLoading && isFetching && (
+                <Spinner sie="sm" color="gray.500" ml="1rem"/>
+              )}
+            </Heading>
 
             <Link href="/users/create" passHref>
               <Button
