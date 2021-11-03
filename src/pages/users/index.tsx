@@ -41,6 +41,9 @@ export default function UserList() {
     })
 
     return users;
+  }, {
+    // O dado é considerado recente durante cinco segundos após a requisição
+    staleTime: 1000 * 5, // 5 seconds
   });
 
   const isWideVersion = useBreakpointValue({
