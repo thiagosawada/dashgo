@@ -56,6 +56,7 @@ export function makeServer() {
         return new Response(200, { "x-total-count": String(total) }, { users });
       });
 
+      this.get("/users/:id");
       this.post("/users");
 
       // Atribui como string vazia para não entrar em conflito com as rotas de api do next

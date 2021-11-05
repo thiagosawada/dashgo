@@ -40,7 +40,7 @@ export function useUsers(page: number) {
   // getUsers() => executa a função no momento em que o código é criado
   // () => getUsers(page) => executa a função quando a query for lançada
   return useQuery(["users", page], () => getUsers(page), {
-    // O dado é considerado recente durante cinco segundos após a requisição
-    staleTime: 1000 * 5, // 5 seconds
+    // O dado é considerado recente durante dez minutos após a requisição
+    staleTime: 1000 * 60 * 10, // 10 min
   });
 }
