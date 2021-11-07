@@ -12,10 +12,14 @@ import {
 import { SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useMutation } from 'react-query';
+import { useRouter } from "next/router";
 
 import { Input } from "../../components/Form/Input";
 import { Header } from "../../components/Header";
 import { Sidebar } from "../../components/Sidebar";
+import { api } from "../../services/api";
+import { queryClient } from "../../services/queryClient";
 
 type CreateUserFormData = {
   name: string;
@@ -34,6 +38,26 @@ const createUserFormSchema = yup.object().shape({
 });
 
 export default function CreateUser() {
+  const router = useRouter()
+
+  // Ao usar o useMutation, é possível monitorar o estado da chamada (loading, success, error)
+  // Quando há falha inesperada, o react query tenta fazer a chamada três vezes
+  const createUser = useMutation(async (user: CreateUserFormData) => {
+    const response = await api.post("users", {
+      user: {
+        ...user,
+        created_at: new Date(),
+      }
+    });
+
+    return response.data.user;
+  }, {
+    // Limpar o cache
+    onSuccess: () => {
+      queryClient.invalidateQueries("users")
+    }
+  });
+
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(createUserFormSchema),
   });
@@ -41,9 +65,9 @@ export default function CreateUser() {
   const { errors } = formState;
 
   const handleCreateUser: SubmitHandler<CreateUserFormData> = async (values) => {
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await createUser.mutateAsync(values);
 
-    console.log(values);
+    router.push("/users");
   }
 
   return (
