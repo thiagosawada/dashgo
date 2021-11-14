@@ -13,7 +13,7 @@ type GetUsersResponse = {
   users: User[];
 }
 
-export async function getUsers(page): Promise<GetUsersResponse> {
+export async function getUsers(page: number): Promise<GetUsersResponse> {
   const { data, headers } = await api.get("users", {
     params: { page },
   });
@@ -34,7 +34,7 @@ export async function getUsers(page): Promise<GetUsersResponse> {
   return { users, totalCount };
 }
 
-export function useUsers(page: number) {
+export function useUsers(page: number, options) {
   // users => chave para se referir ao cache
   // Sempre que houver uma informação que vai mudar o retorno do react query, é preciso alterar o nome da chave
   // getUsers() => executa a função no momento em que o código é criado
@@ -42,5 +42,6 @@ export function useUsers(page: number) {
   return useQuery(["users", page], () => getUsers(page), {
     // O dado é considerado recente durante dez minutos após a requisição
     staleTime: 1000 * 60 * 10, // 10 min
+    ...options,
   });
 }
