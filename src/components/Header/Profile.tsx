@@ -15,9 +15,6 @@ export function Profile({ showProfileData = true }: ProfileProps) {
           </Text>
         </Box>
       )}
-
-
-
       <Avatar size="md" name="Thiago Sawada" src="https://github.com/thiagosawada.png" />
     </Flex>
   );
